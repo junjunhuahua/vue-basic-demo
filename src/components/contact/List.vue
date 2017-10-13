@@ -5,7 +5,17 @@
     </div>
     <div class="contact-list-content">
       <template>
-        <el-form>
+        <div class="contact-list-wrap">
+          <h3>高级检索</h3>
+          <el-form ref="contactSearch" :model="searchParams" :inline=true>
+            <el-form-item label="姓名">
+              <el-input v-model="searchParams.name" placeholder="请输入需要检索的姓名"></el-input>
+            </el-form-item>
+          </el-form>
+          <el-button type="primary" size="mini" round @click="contactSearch('contactSearch')">搜索</el-button>
+        </div>
+        <div class="contact-list-wrap">
+          <h3>联系人列表</h3>
           <el-table
             :data="listNewData"
             style="width: 100%"
@@ -37,7 +47,7 @@
               </template>
             </el-table-column>
           </el-table>
-        </el-form>
+        </div>
       </template>
     </div>
     <contact-view ref="contactView" :viewData="curData" :viewShow.sync="viewShow"></contact-view>
@@ -46,16 +56,21 @@
 
 <script>
   import contactView from './View.vue'
+  import ElInput from '../../../node_modules/element-ui/packages/input/src/input.vue'
 
   export default {
     data () {
       return {
         listData: null,
         curData: {},
-        viewShow: false
+        viewShow: false,
+        searchParams: {
+          name: ''
+        }
       }
     },
     components: {
+      ElInput,
       contactView
     },
     computed: {
@@ -89,7 +104,6 @@
           cancelButtonText: '取消',
           type: 'warning',
           callback: (action) => {
-            console.log(action)
             if (action === 'confirm') {
               this.$delete(this.listData, data.id)
               this.utils.setLocalStorage('vueContact', this.listData)
@@ -109,6 +123,16 @@
 //        })
         this.viewShow = true
         this.curData = this.listData[row.id]
+      },
+      contactSearch: function () {
+        let data = this.utils.getLocalStorage('vueContact')
+        let newData = {}
+        for (let item in data) {
+          if (data[item].name.indexOf(this.searchParams.name) > -1) {
+            newData[item] = data[item]
+          }
+        }
+        this.listData = newData
       }
     }
   }
@@ -127,5 +151,29 @@
 
   .contact-list-content {
     text-align: left;
+  }
+
+  .contact-list-wrap {
+    margin-top: 20px;
+    border: 1px solid #d3d3d3;
+  }
+
+  .contact-list-wrap h3 {
+    margin: 0;
+    padding: 10px;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 1px solid #d3d3d3;
+  }
+
+  .contact-list-wrap .el-form {
+    margin: 10px;
+  }
+
+  .contact-list-wrap .el-form--inline .el-form-item {
+    margin: 0;
+  }
+  .contact-list-wrap .el-button.is-round {
+    margin: 10px;
   }
 </style>
