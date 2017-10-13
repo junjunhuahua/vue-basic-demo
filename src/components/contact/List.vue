@@ -56,7 +56,6 @@
 
 <script>
   import contactView from './View.vue'
-  import ElInput from '../../../node_modules/element-ui/packages/input/src/input.vue'
 
   export default {
     data () {
@@ -70,7 +69,6 @@
       }
     },
     components: {
-      ElInput,
       contactView
     },
     computed: {
