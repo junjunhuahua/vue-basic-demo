@@ -1,4 +1,4 @@
-# news2
+# contact
 
 > A Vue.js project
 
