@@ -17,7 +17,7 @@
         <div class="contact-list-wrap">
           <h3>联系人列表</h3>
           <el-table
-            :data="listNewData"
+            :data="listData"
             style="width: 100%"
             @row-click="viewContact"
             :default-sort="{prop: 'name', order: 'descending'}"
@@ -41,7 +41,7 @@
             </el-table-column>
             <el-table-column
               label="功能">
-              <template scope="scope">
+              <template slot-scope="scope">
                 <el-button size="mini" type="primary" @click.stop="editContact(scope)">编辑</el-button>
                 <el-button size="mini" @click.stop="deleteContact(scope)">删除</el-button>
               </template>
@@ -71,17 +71,12 @@
     components: {
       contactView
     },
-    computed: {
-      listNewData: function () {
-        if (this.listData) {
-          return Object.values(this.listData)
-        } else {
-          return []
-        }
-      }
-    },
     mounted: function () {
-      this.listData = this.utils.getLocalStorage('vueContact')
+      let vm = this
+      let url = '/api/test/user/users'
+      this.$ajax.post(url).then(function (res) {
+        vm.listData = res.data.data
+      })
     },
     methods: {
       goToNew: function () {
@@ -91,20 +86,27 @@
         let val = row.sex
         if (val === 'male') {
           return '男'
-        } else {
+        } else if (val === 'female') {
           return '女'
         }
       },
+      // 删除联系人
       deleteContact: function (res) {
         let data = res.row
+        let vm = this
         this.$confirm('此操作将永久删除该联系人, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
           callback: (action) => {
             if (action === 'confirm') {
-              this.$delete(this.listData, data.id)
-              this.utils.setLocalStorage('vueContact', this.listData)
+              let url = '/api/test/user/delete'
+              vm.$ajax.post(url, {id: data.id}).then(function () {
+                let idx = vm.listData.findIndex(function (val) {
+                  return val.id === res.row.id
+                })
+                vm.$delete(vm.listData, idx)
+              })
             }
           }
         })
@@ -116,21 +118,16 @@
         })
       },
       viewContact: function (row) {
-//        this.$router.push({
-//          path: '/contact/view', query: {id: row.id}
-//        })
         this.viewShow = true
-        this.curData = this.listData[row.id]
+        this.curData = row
       },
+      // 搜索联系人
       contactSearch: function () {
-        let data = this.utils.getLocalStorage('vueContact')
-        let newData = {}
-        for (let item in data) {
-          if (data[item].name.indexOf(this.searchParams.name) > -1) {
-            newData[item] = data[item]
-          }
-        }
-        this.listData = newData
+        let vm = this
+        let url = '/api/test/user/users'
+        this.$ajax.post(url, vm.searchParams).then(function (res) {
+          vm.listData = res.data.data
+        })
       }
     }
   }
@@ -171,6 +168,7 @@
   .contact-list-wrap .el-form--inline .el-form-item {
     margin: 0;
   }
+
   .contact-list-wrap .el-button.is-round {
     margin: 10px;
   }

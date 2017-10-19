@@ -3,7 +3,7 @@
     <div class="app-left">
       <el-row class="tac">
         <el-col>
-          <el-menu :default-active="menuIndex" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+          <el-menu :default-active="menuIndex" class="el-menu-vertical-demo"
                    background-color="#545c64" text-color="#fff" :unique-opened="menuUniqueOpen" :router="menuRouter"
                    active-text-color="#ffd04b">
             <h3>我的应用</h3>
@@ -43,6 +43,7 @@
       }
     },
     mounted: function () {
+      // 左侧边定高
       let winHeight = window.innerHeight
       let $menu = document.querySelector('.app-left')
       $menu.style.height = winHeight + 'px'
@@ -50,16 +51,7 @@
     watch: {
       '$route' (to) {
         // 对路由变化作出响应...
-//        console.log(to)
         this.menuIndex = to.name
-      }
-    },
-    methods: {
-      handleOpen: function () {
-//        console.log(1)
-      },
-      handleClose: function () {
-//        console.log(2)
       }
     }
   }
@@ -90,20 +82,21 @@
   }
 
   .app-left {
+    position: fixed;
+    left: 0;
+    top: 0;
     width: 250px;
   }
 
   .app-right {
     flex: 1;
-    /*margin-left: 250px;*/
-    padding: 20px 30px;
+    margin: 20px 30px 20px 280px;
   }
 
   .app-left h3 {
     margin-left: 10px;
     color: #fff;
   }
-
 
   .app-left .el-menu-vertical-demo {
     height: 100%;

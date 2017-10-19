@@ -49,14 +49,14 @@
 <script>
   export default {
     data () {
-      var nameValid = (rule, value, callback) => {
+      let nameValid = (rule, value, callback) => {
         if (!value) {
           callback(new Error('姓名不能为空'))
         } else {
           callback()
         }
       }
-      var mobileValid = (rule, value, callback) => {
+      let mobileValid = (rule, value, callback) => {
         let phonePattern = /(^\s*$)|(^[1][3,4,5,7,8][0-9]{9}$)/
         if (value && !phonePattern.test(value)) {
           callback(new Error('手机号格式不正确'))
@@ -70,11 +70,13 @@
         listData: {},
         form: {
           name: '',
+          phone: '',
           sex: '',
           area: '',
           always: false,
           relationship: [],
           mobile: '',
+          id: '',
           desc: ''
         },
         rules: {
@@ -98,47 +100,34 @@
     methods: {
       // 检查页面是新建还是编辑
       checkPageStatus: function (id) {
-        this.listData = this.utils.getLocalStorage('vueContact') || {}
+        let url = '/api/test/user/user'
+        let vm = this
+
         if (id) {
           this.type = 'edit'
           this.btnName = '修改'
-          // 如果该id并未在后台数据中出现，报错且跳转回列表页
-          if (!this.listData[id]) {
-//            this.$alert('没有该用户', '警告', {
-//              confirmButtonText: '确定',
-//              callback: () => {
-//                this.$router.push('/contact')
-//              }
-//            })
-            alert('没有该用户')
-            this.$router.push('/contact')
-            return
-          }
-          this.form = this.listData[id]
+          this.$ajax.post(url, {id: id}).then(function (res) {
+            vm.form = res.data.data
+          })
         } else {
           this.type = 'add'
           this.btnName = '新建'
         }
       },
+      // 取消按钮事件
       cancelForm: function () {
         this.$router.push('/contact')
       },
+      // 确定按钮事件
       onSubmit: function (formName) {
+        let vm = this
+        let url = '/api/test/user/add'
         this.$refs[formName].validate((valid) => {
           if (valid) {
-//            alert('submit!')
-            let data = this.listData || {}
-            if (this.type === 'add') {
-              let uid = this.utils.uuid()
-              data[uid] = this.$refs[formName].model
-              data[uid].id = uid
-            } else {
-              let id = this.$route.query.id
-              data[id] = this.$refs[formName].model
-              data[id].id = this.$route.query.id
-            }
-            this.utils.setLocalStorage('vueContact', data)
-            this.$router.push('/contact')
+            let data = this.form || {}
+            this.$ajax.post(url, data).then(function (res) {
+              vm.$router.push('/contact')
+            })
           } else {
             console.log('error submit!!')
             return false
