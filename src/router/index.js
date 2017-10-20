@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
+let loadingInstance
 let myRouter = new VueRouter({
   routes: [
     {
@@ -29,10 +30,16 @@ let myRouter = new VueRouter({
     }
   ]
 })
-// 全局路由钩子，备用
-// myRouter.beforeEach((to, from, next) => {
-//   let nowUrl = to.fullPath
-//   next()
-// })
+// 路由切换时的loading效果
+myRouter.beforeEach((to, from, next) => {
+  loadingInstance = this.a.app.$loading()
+  next()
+})
+
+myRouter.afterEach(() => {
+  setTimeout(function () {
+    loadingInstance.close()
+  }, 0)
+})
 
 export default myRouter
