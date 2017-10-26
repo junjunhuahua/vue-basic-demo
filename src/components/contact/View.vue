@@ -57,8 +57,7 @@
   }
 </script>
 
-<style scoped>
-  .contact-view {
-    text-align: left;
-  }
+<style lang="stylus" scoped>
+  .contact-view
+    text-align left
 </style>

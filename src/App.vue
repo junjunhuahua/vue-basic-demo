@@ -24,7 +24,9 @@
       </el-row>
     </div>
     <div class="app-right">
-      <router-view></router-view>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>
@@ -57,66 +59,47 @@
   }
 </script>
 
-<style>
-  .clearfix {
-    clear: both;
-  }
+<style lang="stylus">
+  .clearfix
+    clear both
+    &:after
+      content ''
+      display block
+      visibility hidden
+      height 0
+      font-size 0
+      clear both
 
-  .clearfix:after {
-    content: '';
-    display: block;
-    visibility: hidden;
-    height: 0;
-    font-size: 0;
-    clear: both;
-  }
+  #app
+    display flex
+    font-family 'Avenir', Helvetica, Arial, sans-serif
+    -webkit-font-smoothing antialiased
+    -moz-osx-font-smoothing grayscale
+    text-align center
+    color #333
+    width 100%
 
-  #app {
-    display: flex;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #333;
-    width: 100%;
-  }
+  .app-left
+    position fixed
+    left 0
+    top 0
+    width 250px
+    h3
+      margin-left 10px
+      color #fff
+    .el-menu-vertical-demo, .el-row, .el-col
+      height 100%
+    .el-menu-vertical-demo
+      text-align: left;
 
-  .app-left {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 250px;
-  }
+  .app-right
+    flex 1
+    margin 20px 30px 20px 280px
 
-  .app-right {
-    flex: 1;
-    margin: 20px 30px 20px 280px;
-  }
+  .fade-enter-active, .fade-leave-active
+    transition opacity .5s
 
-  .app-left h3 {
-    margin-left: 10px;
-    color: #fff;
-  }
+  .fade-enter, .fade-leave-to
+    opacity 0
 
-  .app-left .el-menu-vertical-demo {
-    height: 100%;
-    text-align: left;
-  }
-
-  .app-left .el-row {
-    height: 100%;
-  }
-
-  .app-left .el-col {
-    height: 100%;
-  }
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s
-  }
-
-  .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */
-  {
-    opacity: 0
-  }
 </style>

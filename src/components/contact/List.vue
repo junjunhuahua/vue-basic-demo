@@ -71,7 +71,7 @@
     components: {
       contactView
     },
-    mounted: function () {
+    mounted () {
       let vm = this
       let url = '/api/test/user/users'
       this.$ajax.post(url).then(function (res) {
@@ -133,43 +133,29 @@
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  .contact-list-header {
-    text-align: right;
-  }
+<style lang="stylus" scoped>
 
-  .contact-list-header .el-button {
-    display: inline-block;
-    text-align: center;
-  }
+  .contact-list-header
+    text-align right
+    .el-button
+      display inline-block
+      text-align center
 
-  .contact-list-content {
-    text-align: left;
-  }
+  .contact-list-content
+    text-align left
 
-  .contact-list-wrap {
-    margin-top: 20px;
-    border: 1px solid #d3d3d3;
-  }
+  .contact-list-wrap
+    margin-top 20px
+    border 1px solid #d3d3d3
+    h3
+      margin 0;
+      padding 10px
+      font-size 18px
+      color #333
+      border-bottom 1px solid #d3d3d3
+    .el-form, .el-button.is-round
+        margin 10px
+    .el-form-item
+        margin 0
 
-  .contact-list-wrap h3 {
-    margin: 0;
-    padding: 10px;
-    font-size: 18px;
-    color: #333;
-    border-bottom: 1px solid #d3d3d3;
-  }
-
-  .contact-list-wrap .el-form {
-    margin: 10px;
-  }
-
-  .contact-list-wrap .el-form--inline .el-form-item {
-    margin: 0;
-  }
-
-  .contact-list-wrap .el-button.is-round {
-    margin: 10px;
-  }
 </style>

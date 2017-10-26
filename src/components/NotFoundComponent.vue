@@ -8,10 +8,8 @@
 
 </script>
 
-<style scoped>
-  div {
-    font-size: 22px;
-    text-align: center;
-  }
-
+<style lang="stylus" scoped>
+  div
+    font-size 22px
+    text-align center
 </style>

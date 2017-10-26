@@ -138,10 +138,9 @@
   }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
 
-  .contact-edit {
-    text-align: left;
-  }
+  .contact-edit
+    text-align left
 
 </style>
