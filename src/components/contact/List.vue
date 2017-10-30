@@ -154,8 +154,11 @@
       color #333
       border-bottom 1px solid #d3d3d3
     .el-form, .el-button.is-round
-        margin 10px
+      margin 10px
     .el-form-item
-        margin 0
+      margin 0
+    .el-table th
+      text-align: center
+
 
 </style>

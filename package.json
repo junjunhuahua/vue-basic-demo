@@ -13,8 +13,9 @@
     "lint": "eslint --ext .js,.vue src test/e2e/specs"
   },
   "dependencies": {
+    "async-validator": "^1.8.1",
     "axios": "^0.16.2",
-    "element-ui": "^2.0.0-beta.1",
+    "element-ui": "^2.0.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue": "^2.5.2",
