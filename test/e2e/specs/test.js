@@ -32,6 +32,12 @@ module.exports = {
       // 1秒后取消删除
       .click('.el-message-box__btns .el-button--default')
       .pause(3000)
+      // 3秒后点击删除
+      .click('.el-table .el-table__row:nth-child(1) .el-button--default')
+      .pause(1000)
+      // 1秒后确认删除
+      .click('.el-message-box__btns .el-button--primary')
+      .pause(5000)
       .end()
   }
 }
