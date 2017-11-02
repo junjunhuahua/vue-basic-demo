@@ -157,8 +157,16 @@
       margin 10px
     .el-form-item
       margin 0
-    .el-table th
+    .el-table
       text-align: center
+      th
+        text-align: center
 
 
+</style>
+
+<style>
+  .el-table th {
+    text-align: center
+  }
 </style>

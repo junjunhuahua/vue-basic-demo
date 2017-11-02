@@ -30,7 +30,7 @@ module.exports = {
     // get to the node server for data
     proxyTable: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:3001',
         changeOrigin: true
       }
     },
