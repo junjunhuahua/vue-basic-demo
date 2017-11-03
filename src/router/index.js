@@ -8,6 +8,7 @@ let myRouter = new VueRouter({
     {
       path: '*',
       component: () => import('../components/NotFoundComponent.vue')
+      // component: resolve => { require(['../components/NotFoundComponent.vue'], resolve) }
     },
     {
       path: '/',
@@ -39,7 +40,7 @@ myRouter.beforeEach((to, from, next) => {
 myRouter.afterEach(() => {
   setTimeout(function () {
     loadingInstance.close()
-  }, 0)
+  }, 100)
 })
 
 export default myRouter
